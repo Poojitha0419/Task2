@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cricket Stadium Booking</title>
+  <style>
+    /* Basic reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Container styling */
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    /* Image Gallery */
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+…
+[2:54 pm, 07/11/2024] Doreamon: To enhance the design, I’ll apply colors to each section and refine the code for a cleaner appearance. I'll use a color scheme with blue for the contact form, green for the stadium gallery, and orange for the to-do list, while maintaining responsive and visually distinct sections.
+
+Here's the revised code:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cricket Stadium Booking</title>
+  <style>
+    /* Basic reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Container styling */
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    /* Section Styling */
+    .section {
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .contact-section {
+      background-color: #e3f2fd; /* Light Blue */
+      border: 1px solid #90caf9;
+    }
+
+    .gallery-section {
+      background-color: #e8f5e9; /* Light Green */
+      border: 1px solid #a5d6a7;
+    }
+
+    .todo-section {
+      background-color: #fff3e0; /* Light Orange */
+      border: 1px solid #ffcc80;
+    }
+
+    /* Section Heading */
+    h2 {
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    /* Image Gallery */
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .gallery img {
+      width: 100%;
+      max-width: 150px;
+      cursor: pointer;
+      border-radius: 4px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Form styling */
+    .contact-form input,
+    .contact-form button {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .contact-form button {
+      background-color: #64b5f6; /* Button Blue */
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+      transition: background 0.3s;
+    }
+
+    .contact-form button:hover {
+      background-color: #42a5f5;
+    }
+
+    /* To-do list */
+    .todo-list {
+      list-style-type: none;
+    }
+
+    .todo-list li {
+      background: #ffe0b2;
+      padding: 10px;
+      margin-bottom: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 5px;
+    }
+
+    .todo-list li button {
+      background: #f44336; /* Remove Button Red */
+      color: white;
+      border: none;
+      cursor: pointer;
+      padding: 5px 10px;
+      border-radius: 3px;
+    }
+
+    .todo-list li button:hover {
+      background: #d32f2f;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Contact Form Section -->
+    <div class="section contact-section">
+      <h2>Contact Form</h2>
+      <form class="contact-form" onsubmit="return validateForm()">
+        <input type="text" placeholder="Name" required>
+        <input type="text" placeholder="Mobile Number" required>
+        <input type="text" placeholder="Address" required>
+        <input type="email" id="email" placeholder="Email ID" required>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    <!-- Image Gallery Section -->
+    <div class="section gallery-section">
+      <h2>Stadium Gallery</h2>
+      <div class="gallery" id="gallery">
+        <!-- Images will go here -->
+      </div>
+      <input type="file" id="imageInput" style="margin-top: 10px;">
+      <button onclick="addImage()" style="margin-top: 10px; padding: 10px; background-color: #66bb6a; color: white; border: none; cursor: pointer; border-radius: 5px;">Add Image</button>
+    </div>
+
+    <!-- To-do List Section -->
+    <div class="section todo-section">
+      <h2>To-Do List</h2>
+      <input type="text" id="todoInput" placeholder="Add a new task" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px;">
+      <button onclick="addTodo()" style="padding: 10px; background-color: #ffb74d; color: white; border: none; cursor: pointer; border-radius: 5px;">Add Task</button>
+      <ul class="todo-list" id="todoList">
+        <!-- To-do items will go here -->
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    // Image Gallery Add/Remove
+    function addImage() {
+      const fileInput = document.getElementById('imageInput');
+      const gallery = document.getElementById('gallery');
+      if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(file);
+        img.onclick = () => gallery.removeChild(img); // Click to remove image
+        gallery.appendChild(img);
+        fileInput.value = ''; // Reset file input
+      }
+    }
+
+    // Email Validation
+    function validateForm() {
+      const email = document.getElementById('email').value;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        alert("Please enter a valid email address.");
+        return false;
+      }
+      alert("Form submitted successfully!");
+      return true;
+    }
+
+    // To-do List Add/Remove
+    function addTodo() {
+      const todoInput = document.getElementById('todoInput');
+      const todoList = document.getElementById('todoList');
+      const taskText = todoInput.value.trim();
+
+      if (taskText) {
+        const li = document.createElement('li');
+        li.textContent = taskText;
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = "Remove";
+        deleteBtn.onclick = () => todoList.removeChild(li);
+
+        li.appendChild(deleteBtn);
+        todoList.appendChild(li);
+
+        todoInput.value = ''; // Clear input
+      }
+    }
+  </script>
+</body>
+</html>
